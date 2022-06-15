@@ -1,17 +1,10 @@
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include <stdio.h>
-#include <string>
-#include <iostream>
+#include "minesweeper.h"
 
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
 
 SDL_Window* gWindow = NULL;
 SDL_Renderer* gRenderer = NULL;
-
-bool init();
-void close();
 
 bool init()
 {
@@ -51,12 +44,11 @@ void close()
     SDL_DestroyWindow( gWindow );
     gWindow = NULL;
     gRenderer = NULL;
-
     IMG_Quit();
     SDL_Quit();
 }
 
-int main( int argc, char* args[] )
+int main(int argc, char* args[])
 {
     try
     {

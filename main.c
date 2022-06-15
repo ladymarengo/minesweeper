@@ -42,19 +42,18 @@ bool init()
         std::cerr << "Error: " << exception << '\n';
         return false;
     }
-
-	return true;
+    return true;
 }
 
 void close()
 {	
-	SDL_DestroyRenderer( gRenderer );
-	SDL_DestroyWindow( gWindow );
-	gWindow = NULL;
-	gRenderer = NULL;
+    SDL_DestroyRenderer( gRenderer );
+    SDL_DestroyWindow( gWindow );
+    gWindow = NULL;
+    gRenderer = NULL;
 
-	IMG_Quit();
-	SDL_Quit();
+    IMG_Quit();
+    SDL_Quit();
 }
 
 int main( int argc, char* args[] )
@@ -70,16 +69,17 @@ int main( int argc, char* args[] )
         close();
         return 0;
     }
-	bool quit = false;
+
     SDL_Event e;
 
-    while( !quit )
+    while(true)
     {
         while( SDL_PollEvent( &e ) != 0 )
         {
             if( e.type == SDL_QUIT )
             {
-                quit = true;
+                close();
+                return 0;
             }
         }
 

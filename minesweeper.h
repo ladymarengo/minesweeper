@@ -7,4 +7,7 @@
 #include <string>
 #include <iostream>
 
+#define SCREEN_WIDTH 640
+#define SCREEN_HEIGHT 760
+
 #endif

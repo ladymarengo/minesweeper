@@ -81,6 +81,7 @@ class Cells
 {
     public:
         void init();
+        void reset();
         void handle_event( SDL_Event* e, GameState *game_state);
 		void render(SpriteSheet *texture, SDL_Renderer* renderer);
 

@@ -78,9 +78,16 @@ int main(int argc, char* args[])
                 close();
                 return 0;
             }
-
+            
             if (game_state == in_game)
                 cells.handle_event(&e, &game_state);
+
+            if (game_state != in_game && e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_SPACE)
+            {
+                cells.reset();
+                game_state = in_game;
+            }
+
         }
 
         SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0x00, 0xFF );

@@ -6,6 +6,14 @@ void Cells::init()
 	spawn_cells();
 }
 
+void Cells::reset()
+{
+    for( int i = 0; i < TOTAL_CELLS; ++i )
+        m_bombs[i] = false;
+
+    init();
+}
+
 void Cells::handle_event( SDL_Event* e, GameState *game_state)
 {
     for( int i = 0; i < TOTAL_CELLS; ++i )

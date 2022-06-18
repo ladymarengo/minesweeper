@@ -48,6 +48,9 @@ void Cell::handle_event( SDL_Event* e, GameState *game_state, int cell, bool bom
 					case no_pressed:
 						m_state = flag;
 						break;
+					case flag:
+						m_state = no_pressed;
+						break;
 					default:
 						break;
 				}

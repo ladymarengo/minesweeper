@@ -54,7 +54,7 @@ int main(int argc, char* args[])
         if( !init() )
             throw "Failed to initialize!\n";
         
-        texture.loadFromFile("cells.png", gRenderer);    
+        texture.load_from_file("cells.png", gRenderer);    
     }
     catch (const char* exception)
     {
@@ -77,7 +77,7 @@ int main(int argc, char* args[])
                 return 0;
             }
 
-            cell.handleEvent(&e);
+            cell.handle_event(&e);
         }
 
         SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0x00, 0xFF );

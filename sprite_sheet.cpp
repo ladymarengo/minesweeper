@@ -1,25 +1,5 @@
 #include "minesweeper.h"
 
-// class SpriteSheet
-// {
-// 	public:
-// 		SpriteSheet();
-// 		~SpriteSheet();
-// 		bool loadFromFile( std::string path );
-// 		void free();
-// 		void render( int x, int y, SDL_Rect* clip;
-		
-//         int getWidth();
-// 		int getHeight();
-//         SDL_Rect *SpriteSheet::getState(CellType state);
-
-// 	private:
-// 		SDL_Texture* mTexture;
-// 		int mWidth;
-// 		int mHeight;
-//         SDL_Rect m_cell_states[CELL_LINE];
-// };
-
 SpriteSheet::SpriteSheet()
 {
 	mTexture = NULL;
@@ -32,7 +12,7 @@ SpriteSheet::~SpriteSheet()
 	free();
 }
 
-bool SpriteSheet::loadFromFile( std::string path, SDL_Renderer* renderer)
+bool SpriteSheet::load_from_file( std::string path, SDL_Renderer* renderer)
 {
 	free();
 
@@ -51,17 +31,29 @@ bool SpriteSheet::loadFromFile( std::string path, SDL_Renderer* renderer)
     SDL_FreeSurface( loadedSurface );
     mTexture = newTexture;
 
-    m_cell_states[0].x = 0;
-	m_cell_states[0].y = 0;
-	m_cell_states[0].w = CELL_SIZE;
-	m_cell_states[0].h = CELL_SIZE;
-
-    m_cell_states[2].x = CELL_SIZE * 2;
-	m_cell_states[2].y = 0;
-	m_cell_states[2].w = CELL_SIZE;
-	m_cell_states[2].h = CELL_SIZE;
+    set_states();
 
 	return (true);
+}
+
+void  SpriteSheet::set_states()
+{
+    int state{0};
+
+    for (int row = 0; row < 4; row++)
+    {
+        for (int cell = 0; cell < 4; cell++)
+        {
+            if (state < (int) total)
+            {
+                m_cell_states[state].x = CELL_SIZE * cell;
+                m_cell_states[state].y = CELL_SIZE * row;
+                m_cell_states[state].w = CELL_SIZE;
+                m_cell_states[state].h = CELL_SIZE;
+            }
+            state++;
+        }
+    }
 }
 
 void SpriteSheet::free()
@@ -81,17 +73,7 @@ void SpriteSheet::render( int x, int y, SDL_Rect* clip, SDL_Renderer* renderer)
 	SDL_RenderCopy( renderer, mTexture, clip, &renderQuad );
 }
 
-int SpriteSheet::getWidth()
-{
-	return mWidth;
-}
-
-int SpriteSheet::getHeight()
-{
-	return mHeight;
-}
-
-SDL_Rect *SpriteSheet::getState(CellType state)
+SDL_Rect *SpriteSheet::get_state_rect(CellType state)
 {
 	return &m_cell_states[state];
 }

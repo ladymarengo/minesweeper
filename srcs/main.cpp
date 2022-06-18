@@ -54,7 +54,7 @@ int main(int argc, char* args[])
         if( !init() )
             throw "Failed to initialize!\n";
         
-        texture.load_from_file("cells.png", gRenderer);    
+        texture.load_from_file("./assets/cells.png", gRenderer);    
     }
     catch (const char* exception)
     {

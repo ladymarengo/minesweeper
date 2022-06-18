@@ -75,8 +75,8 @@ int main(int argc, char* args[])
         return 0;
     }
 
-    Cell cells[TOTAL_CELLS];
-    spawn_cells(cells);
+    Cells cells{};
+    cells.init();
 
     GameState game_state{in_game};
     SDL_Event e;
@@ -92,17 +92,13 @@ int main(int argc, char* args[])
             }
 
             if (game_state == in_game)
-            {
-                for( int i = 0; i < TOTAL_CELLS; ++i )
-                    cells[i].handle_event(&e, &game_state);
-            }
+                cells.handle_event(&e, &game_state);
         }
 
         SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0x00, 0xFF );
         SDL_RenderClear( gRenderer );
 
-        for( int i = 0; i < TOTAL_CELLS; ++i )
-                cells[i].render(&texture, gRenderer);
+        cells.render(&texture, gRenderer);
 
         SDL_RenderPresent( gRenderer );
     }

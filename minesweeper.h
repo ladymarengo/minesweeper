@@ -71,4 +71,16 @@ class Cell
         bool m_is_bomb;
 };
 
+class Cells
+{
+    public:
+        void init();
+        void handle_event( SDL_Event* e, GameState *game_state);
+		void render(SpriteSheet *texture, SDL_Renderer* renderer);
+
+    private:
+        Cell m_cells[TOTAL_CELLS];
+        bool m_bombs[TOTAL_CELLS];
+};
+
 #endif

@@ -47,10 +47,14 @@ void close()
 
 int main(int argc, char* args[])
 {
+    SpriteSheet texture;
+
     try
     {
         if( !init() )
             throw "Failed to initialize!\n";
+        
+        texture.loadFromFile("cells.png", gRenderer);    
     }
     catch (const char* exception)
     {
@@ -58,6 +62,8 @@ int main(int argc, char* args[])
         close();
         return 0;
     }
+
+    Cell cell{100, 100, false};
 
     SDL_Event e;
 
@@ -70,10 +76,13 @@ int main(int argc, char* args[])
                 close();
                 return 0;
             }
+
+            cell.handleEvent(&e);
         }
 
         SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0x00, 0xFF );
         SDL_RenderClear( gRenderer );
+        cell.render(&texture, gRenderer);
 
         SDL_RenderPresent( gRenderer );
     }

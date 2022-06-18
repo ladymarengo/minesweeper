@@ -45,18 +45,6 @@ void close()
     SDL_Quit();
 }
 
-void spawn_cells(Cell cells[TOTAL_CELLS])
-{
-    int cell{0};
-    for (int row = 0; row < CELL_LINE; row++)
-    {
-        for (int col = 0; col < CELL_LINE; col++, cell++)
-        {
-            cells[cell].init(OFFSET_WIDTH + col * CELL_SIZE, OFFSET_HEIGTH + row * CELL_SIZE, false);
-        }
-    }
-}
-
 int main(int argc, char* args[])
 {
     SpriteSheet texture;

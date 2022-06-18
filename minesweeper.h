@@ -81,6 +81,7 @@ class Cells
     private:
         Cell m_cells[TOTAL_CELLS];
         bool m_bombs[TOTAL_CELLS];
+        void spawn_cells();
 };
 
 #endif

@@ -64,15 +64,17 @@ class Cell
 {
 	public:
         void init(int x, int y, bool is_bomb);
-		void handle_event( SDL_Event* e, GameState *game_state, int cell, bool bombs[TOTAL_CELLS]);
+		void handle_event( SDL_Event* e, GameState *game_state, int cell, bool bombs[TOTAL_CELLS], Cell cells[TOTAL_CELLS]);
 		void render(SpriteSheet *texture, SDL_Renderer* renderer);
         int count_neighbours(int cell, bool bombs[TOTAL_CELLS]);
         CellType get_state();
+        void open(int cell, bool bombs[TOTAL_CELLS], Cell cells[TOTAL_CELLS]);
 
 	private:
 		SDL_Point m_position;
 		CellType m_state;
         bool m_is_bomb;
+        void open_neighbours(int cell, bool bombs[TOTAL_CELLS], Cell cells[TOTAL_CELLS]);
 };
 
 class Cells

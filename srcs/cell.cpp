@@ -11,7 +11,7 @@ void Cell::init(int x, int y, bool is_bomb)
     m_state = no_pressed;
 }
 
-void Cell::handle_event( SDL_Event* e, GameState *game_state, int cell, bool bombs[TOTAL_CELLS])
+void Cell::handle_event( SDL_Event* e, GameState *game_state, int cell, bool bombs[TOTAL_CELLS], Cell cells[TOTAL_CELLS])
 {
     int x, y;
 	SDL_GetMouseState( &x, &y );
@@ -32,11 +32,7 @@ void Cell::handle_event( SDL_Event* e, GameState *game_state, int cell, bool bom
 						}
 						else
 						{
-							int neighbours = count_neighbours(cell, bombs);
-							if (!neighbours)
-								m_state = empty;
-							else
-								m_state = static_cast<CellType>(one - 1 + neighbours);
+							open(cell, bombs, cells);
 						}	
 						break;
 					default:
@@ -93,4 +89,47 @@ int Cell::count_neighbours(int cell, bool bombs[TOTAL_CELLS])
 CellType Cell::get_state()
 {
 	return (m_state);
+}
+
+void Cell::open(int cell, bool bombs[TOTAL_CELLS], Cell cells[TOTAL_CELLS])
+{
+	int neighbours = count_neighbours(cell, bombs);
+
+	if (!neighbours)
+	{
+		m_state = empty;
+		open_neighbours(cell, bombs, cells);
+	}
+	else
+		m_state = static_cast<CellType>(one - 1 + neighbours);
+}
+
+void Cell::open_neighbours(int cell, bool bombs[TOTAL_CELLS], Cell cells[TOTAL_CELLS])
+{
+	if (cell - CELL_LINE >= 0 && cells[cell - CELL_LINE].get_state() == no_pressed)
+        cells[cell - CELL_LINE].open(cell - CELL_LINE, bombs, cells);
+
+    
+	if (cell + CELL_LINE < TOTAL_CELLS && cells[cell + CELL_LINE].get_state() == no_pressed)
+		cells[cell + CELL_LINE].open(cell + CELL_LINE, bombs, cells);
+
+	if (cell % CELL_LINE != 0)
+	{
+		if (cells[cell - 1].get_state() == no_pressed)
+			cells[cell - 1].open(cell - 1, bombs, cells);
+		if (cell - CELL_LINE - 1 >= 0 && cells[cell - CELL_LINE - 1].get_state() == no_pressed)
+			cells[cell - CELL_LINE - 1].open(cell - CELL_LINE - 1, bombs, cells);
+		if (cell + CELL_LINE - 1 < TOTAL_CELLS && cells[cell + CELL_LINE - 1].get_state() == no_pressed)
+			cells[cell + CELL_LINE - 1].open(cell + CELL_LINE - 1, bombs, cells);
+	}
+
+	if (cell % CELL_LINE != CELL_LINE - 1)
+	{
+		if (cells[cell + 1].get_state() == no_pressed)
+			cells[cell + 1].open(cell + 1, bombs, cells);
+		if (cell - CELL_LINE + 1 >= 0 && cells[cell - CELL_LINE + 1].get_state() == no_pressed)
+			cells[cell - CELL_LINE + 1].open(cell - CELL_LINE + 1, bombs, cells);
+		if (cell + CELL_LINE + 1 < TOTAL_CELLS && cells[cell + CELL_LINE + 1].get_state() == no_pressed)
+			cells[cell + CELL_LINE + 1].open(cell + CELL_LINE + 1, bombs, cells);
+	}
 }

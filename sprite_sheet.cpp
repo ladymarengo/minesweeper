@@ -42,7 +42,7 @@ void  SpriteSheet::set_states()
 
     for (int row = 0; row < 4; row++)
     {
-        for (int cell = 0; cell < 4, state < (int) total; cell++, state++)
+        for (int cell = 0; cell < 4 && state < (int) total; cell++, state++)
         {
             m_cell_states[state].x = CELL_SIZE * cell;
             m_cell_states[state].y = CELL_SIZE * row;

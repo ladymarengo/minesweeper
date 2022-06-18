@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <string>
 #include <iostream>
+#include <random>
 
 #define SCREEN_WIDTH 660
 #define SCREEN_HEIGHT 760
@@ -14,6 +15,7 @@
 #define CELL_SIZE 40
 #define CELL_LINE 16
 #define TOTAL_CELLS CELL_LINE * CELL_LINE
+#define TOTAL_BOMBS 10
 
 enum GameState
 {
@@ -82,6 +84,7 @@ class Cells
         Cell m_cells[TOTAL_CELLS];
         bool m_bombs[TOTAL_CELLS];
         void spawn_cells();
+        void spawn_bombs();
 };
 
 #endif

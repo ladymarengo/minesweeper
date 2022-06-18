@@ -5,10 +5,13 @@ void Cell::init(int x, int y, bool is_bomb)
 	m_position.x = x;
     m_position.y = y;
     m_is_bomb = is_bomb;
+	// if (m_is_bomb)
+	// 	m_state = bomb_no_pressed;
+	// else
     m_state = no_pressed;
 }
 
-void Cell::handle_event( SDL_Event* e, GameState *game_state)
+void Cell::handle_event( SDL_Event* e, GameState *game_state, int cell, bool bombs[TOTAL_CELLS])
 {
     int x, y;
 	SDL_GetMouseState( &x, &y );
@@ -28,7 +31,13 @@ void Cell::handle_event( SDL_Event* e, GameState *game_state)
 							*game_state = defeat;
 						}
 						else
-							m_state = empty;
+						{
+							int neighbours = count_neighbours(cell, bombs);
+							if (!neighbours)
+								m_state = empty;
+							else
+								m_state = static_cast<CellType>(one - 1 + neighbours);
+						}	
 						break;
 					default:
 						break;
@@ -52,4 +61,28 @@ void Cell::handle_event( SDL_Event* e, GameState *game_state)
 void Cell::render(SpriteSheet *texture, SDL_Renderer* renderer)
 {
 	texture->render( m_position.x, m_position.y, texture->get_state_rect(m_state), renderer);
+}
+
+int Cell::count_neighbours(int cell, bool bombs[TOTAL_CELLS])
+{
+	int neighbours[]{
+		cell - CELL_LINE - 1,
+		cell - CELL_LINE,
+		cell - CELL_LINE + 1,
+		cell - 1,
+		cell + 1,
+		cell + CELL_LINE - 1,
+		cell + CELL_LINE,
+		cell + CELL_LINE + 1,
+		};
+
+	int count{0};
+
+	for (int neighbour : neighbours)
+	{
+		if (neighbour >= 0 && neighbour < TOTAL_CELLS && bombs[neighbour])
+			count++;
+	}
+
+	return (count);
 }

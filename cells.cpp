@@ -9,7 +9,7 @@ void Cells::init()
 void Cells::handle_event( SDL_Event* e, GameState *game_state)
 {
     for( int i = 0; i < TOTAL_CELLS; ++i )
-        m_cells[i].handle_event(e, game_state);
+        m_cells[i].handle_event(e, game_state, i, m_bombs);
 }
 	
 void Cells::render(SpriteSheet *texture, SDL_Renderer* renderer)

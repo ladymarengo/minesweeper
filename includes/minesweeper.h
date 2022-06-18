@@ -15,7 +15,7 @@
 #define CELL_SIZE 40
 #define CELL_LINE 16
 #define TOTAL_CELLS CELL_LINE * CELL_LINE
-#define TOTAL_BOMBS 20
+#define TOTAL_BOMBS 40
 
 enum GameState
 {
@@ -67,6 +67,7 @@ class Cell
 		void handle_event( SDL_Event* e, GameState *game_state, int cell, bool bombs[TOTAL_CELLS]);
 		void render(SpriteSheet *texture, SDL_Renderer* renderer);
         int count_neighbours(int cell, bool bombs[TOTAL_CELLS]);
+        CellType get_state();
 
 	private:
 		SDL_Point m_position;
@@ -86,6 +87,7 @@ class Cells
         bool m_bombs[TOTAL_CELLS];
         void spawn_cells();
         void spawn_bombs();
+        bool check_victory();
 };
 
 #endif

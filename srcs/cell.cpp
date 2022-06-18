@@ -65,24 +65,29 @@ void Cell::render(SpriteSheet *texture, SDL_Renderer* renderer)
 
 int Cell::count_neighbours(int cell, bool bombs[TOTAL_CELLS])
 {
-	int neighbours[]{
-		cell - CELL_LINE - 1,
-		cell - CELL_LINE,
-		cell - CELL_LINE + 1,
-		cell - 1,
-		cell + 1,
-		cell + CELL_LINE - 1,
-		cell + CELL_LINE,
-		cell + CELL_LINE + 1,
-		};
-
 	int count{0};
 
-	for (int neighbour : neighbours)
+	count += (cell - CELL_LINE >= 0 && bombs[cell - CELL_LINE]) \
+			+ (cell + CELL_LINE < TOTAL_CELLS && bombs[cell + CELL_LINE]);
+
+	if (cell % CELL_LINE != 0)
 	{
-		if (neighbour >= 0 && neighbour < TOTAL_CELLS && bombs[neighbour])
-			count++;
+		count += bombs[cell - 1] \
+			+ (cell - CELL_LINE - 1 >= 0 && bombs[cell - CELL_LINE - 1]) \
+			+ (cell + CELL_LINE - 1 < TOTAL_CELLS && bombs[cell + CELL_LINE - 1]);
+	}
+
+	if (cell % CELL_LINE != CELL_LINE - 1)
+	{
+		count += bombs[cell + 1] \
+			+ (cell - CELL_LINE + 1 >= 0 && bombs[cell - CELL_LINE + 1]) \
+			+ (cell + CELL_LINE + 1 < TOTAL_CELLS && bombs[cell + CELL_LINE + 1]);
 	}
 
 	return (count);
+}
+
+CellType Cell::get_state()
+{
+	return (m_state);
 }

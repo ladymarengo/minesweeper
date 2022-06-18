@@ -10,6 +10,8 @@ void Cells::handle_event( SDL_Event* e, GameState *game_state)
 {
     for( int i = 0; i < TOTAL_CELLS; ++i )
         m_cells[i].handle_event(e, game_state, i, m_bombs);
+    if (check_victory())
+        *game_state = victory;
 }
 	
 void Cells::render(SpriteSheet *texture, SDL_Renderer* renderer)
@@ -48,4 +50,14 @@ void Cells::spawn_bombs()
 
         m_bombs[bomb] = true;
     }
+}
+
+bool Cells::check_victory()
+{
+    for( int i = 0; i < TOTAL_CELLS; ++i )
+    {
+        if (m_cells[i].get_state() == no_pressed)
+            return (false);
+    }
+    return (true);
 }

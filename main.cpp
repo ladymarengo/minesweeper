@@ -78,11 +78,12 @@ int main(int argc, char* args[])
     Cell cells[TOTAL_CELLS];
     spawn_cells(cells);
 
+    GameState game_state{in_game};
     SDL_Event e;
 
     while(true)
     {
-        while( SDL_PollEvent( &e ) != 0 )
+        while (SDL_PollEvent( &e ) != 0)
         {
             if( e.type == SDL_QUIT )
             {
@@ -90,8 +91,11 @@ int main(int argc, char* args[])
                 return 0;
             }
 
-            for( int i = 0; i < TOTAL_CELLS; ++i )
-                cells[i].handle_event(&e);
+            if (game_state == in_game)
+            {
+                for( int i = 0; i < TOTAL_CELLS; ++i )
+                    cells[i].handle_event(&e, &game_state);
+            }
         }
 
         SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0x00, 0xFF );

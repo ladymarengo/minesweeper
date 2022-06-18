@@ -42,16 +42,12 @@ void  SpriteSheet::set_states()
 
     for (int row = 0; row < 4; row++)
     {
-        for (int cell = 0; cell < 4; cell++)
+        for (int cell = 0; cell < 4, state < (int) total; cell++, state++)
         {
-            if (state < (int) total)
-            {
-                m_cell_states[state].x = CELL_SIZE * cell;
-                m_cell_states[state].y = CELL_SIZE * row;
-                m_cell_states[state].w = CELL_SIZE;
-                m_cell_states[state].h = CELL_SIZE;
-            }
-            state++;
+            m_cell_states[state].x = CELL_SIZE * cell;
+            m_cell_states[state].y = CELL_SIZE * row;
+            m_cell_states[state].w = CELL_SIZE;
+            m_cell_states[state].h = CELL_SIZE;
         }
     }
 }

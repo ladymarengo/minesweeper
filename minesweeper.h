@@ -7,10 +7,13 @@
 #include <string>
 #include <iostream>
 
-#define SCREEN_WIDTH 640
+#define SCREEN_WIDTH 660
 #define SCREEN_HEIGHT 760
+#define OFFSET_WIDTH 10
+#define OFFSET_HEIGTH 110
 #define CELL_SIZE 40
 #define CELL_LINE 16
+#define TOTAL_CELLS CELL_LINE * CELL_LINE
 
 enum CellType
 {
@@ -51,7 +54,7 @@ class SpriteSheet
 class Cell
 {
 	public:
-		Cell(int x, int y, bool is_bomb);
+        void init(int x, int y, bool is_bomb);
 		void handle_event( SDL_Event* e );
 		void render(SpriteSheet *texture, SDL_Renderer* renderer);
 

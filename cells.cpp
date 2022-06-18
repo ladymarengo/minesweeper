@@ -1,6 +1,6 @@
 #include "minesweeper.h"
 
-Cell::Cell(int x, int y, bool is_bomb)
+void Cell::init(int x, int y, bool is_bomb)
 {
 	m_position.x = x;
     m_position.y = y;

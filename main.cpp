@@ -45,6 +45,18 @@ void close()
     SDL_Quit();
 }
 
+void spawn_cells(Cell cells[TOTAL_CELLS])
+{
+    int cell{0};
+    for (int row = 0; row < CELL_LINE; row++)
+    {
+        for (int col = 0; col < CELL_LINE; col++, cell++)
+        {
+            cells[cell].init(OFFSET_WIDTH + col * CELL_SIZE, OFFSET_HEIGTH + row * CELL_SIZE, false);
+        }
+    }
+}
+
 int main(int argc, char* args[])
 {
     SpriteSheet texture;
@@ -63,7 +75,8 @@ int main(int argc, char* args[])
         return 0;
     }
 
-    Cell cell{100, 100, false};
+    Cell cells[TOTAL_CELLS];
+    spawn_cells(cells);
 
     SDL_Event e;
 
@@ -77,12 +90,15 @@ int main(int argc, char* args[])
                 return 0;
             }
 
-            cell.handle_event(&e);
+            for( int i = 0; i < TOTAL_CELLS; ++i )
+                cells[i].handle_event(&e);
         }
 
         SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0x00, 0xFF );
         SDL_RenderClear( gRenderer );
-        cell.render(&texture, gRenderer);
+
+        for( int i = 0; i < TOTAL_CELLS; ++i )
+                cells[i].render(&texture, gRenderer);
 
         SDL_RenderPresent( gRenderer );
     }

@@ -20,4 +20,8 @@ jobs:
         sudo apt-get install -y libsdl2-dev libsdl2-image-dev
     - name: make
       run: make
-
+    - name: Archive production artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: minesweeper_linux
+        path: minesweeper

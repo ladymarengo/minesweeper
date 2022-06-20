@@ -3,28 +3,28 @@
 void Cells::init()
 {
     spawn_bombs();
-	spawn_cells();
+    spawn_cells();
 }
 
 void Cells::reset()
 {
-    for( int i = 0; i < TOTAL_CELLS; ++i )
+    for (int i = 0; i < TOTAL_CELLS; ++i)
         m_bombs[i] = false;
 
     init();
 }
 
-void Cells::handle_event( SDL_Event* e, GameState *game_state)
+void Cells::handle_event(SDL_Event *e, GameState *game_state)
 {
-    for( int i = 0; i < TOTAL_CELLS; ++i )
+    for (int i = 0; i < TOTAL_CELLS; ++i)
         m_cells[i].handle_event(e, game_state, i, m_bombs, m_cells);
     if (check_victory())
         *game_state = victory;
 }
-	
-void Cells::render(SpriteSheet *texture, SDL_Renderer* renderer)
+
+void Cells::render(CellTexture *texture, SDL_Renderer *renderer)
 {
-    for( int i = 0; i < TOTAL_CELLS; ++i )
+    for (int i = 0; i < TOTAL_CELLS; ++i)
         m_cells[i].render(texture, renderer);
 }
 
@@ -53,8 +53,7 @@ void Cells::spawn_bombs()
         do
         {
             bomb = rand_gen(rng);
-        }
-        while (m_bombs[bomb]);
+        } while (m_bombs[bomb]);
 
         m_bombs[bomb] = true;
     }
@@ -62,7 +61,7 @@ void Cells::spawn_bombs()
 
 bool Cells::check_victory()
 {
-    for( int i = 0; i < TOTAL_CELLS; ++i )
+    for (int i = 0; i < TOTAL_CELLS; ++i)
     {
         if (m_cells[i].get_state() == no_pressed)
             return (false);
@@ -79,7 +78,6 @@ bool Cells::check_victory()
 //             open_neighbours(cell - CELL_LINE);
 //     }
 
-    
 // 	// 		+ (cell + CELL_LINE < TOTAL_CELLS && bombs[cell + CELL_LINE]);
 
 // 	// if (cell % CELL_LINE != 0)

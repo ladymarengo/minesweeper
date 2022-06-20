@@ -1,6 +1,6 @@
 NAME = minesweeper
 INCL = -Iincludes/
-FILES = main cell cells sprite_sheet
+FILES = main cell cells sprite_sheet texture
 SRCS = $(patsubst %, srcs/%.cpp, $(FILES))
 
 all:

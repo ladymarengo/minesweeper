@@ -1,18 +1,18 @@
 #include "minesweeper.h"
 
-SpriteSheet::SpriteSheet()
+Texture::Texture()
 {
 	mTexture = NULL;
 	mWidth = 0;
 	mHeight = 0;
 }
 
-SpriteSheet::~SpriteSheet()
+Texture::~Texture()
 {
 	free();
 }
 
-bool SpriteSheet::load_from_file( std::string path, SDL_Renderer* renderer)
+bool Texture::load_from_file( std::string path, SDL_Renderer* renderer)
 {
 	free();
 
@@ -31,28 +31,10 @@ bool SpriteSheet::load_from_file( std::string path, SDL_Renderer* renderer)
     SDL_FreeSurface( loadedSurface );
     mTexture = newTexture;
 
-    set_states();
-
 	return (true);
 }
 
-void  SpriteSheet::set_states()
-{
-    int state{0};
-
-    for (int row = 0; row < 4; row++)
-    {
-        for (int cell = 0; cell < 4 && state < (int) total; cell++, state++)
-        {
-            m_cell_states[state].x = CELL_SIZE * cell;
-            m_cell_states[state].y = CELL_SIZE * row;
-            m_cell_states[state].w = CELL_SIZE;
-            m_cell_states[state].h = CELL_SIZE;
-        }
-    }
-}
-
-void SpriteSheet::free()
+void Texture::free()
 {
 	if( mTexture != NULL )
 	{
@@ -63,13 +45,8 @@ void SpriteSheet::free()
 	}
 }
 
-void SpriteSheet::render( int x, int y, SDL_Rect* clip, SDL_Renderer* renderer)
+void Texture::render( int x, int y, SDL_Rect* clip, SDL_Renderer* renderer)
 {
 	SDL_Rect renderQuad = { x, y, clip->w, clip->h };
 	SDL_RenderCopy( renderer, mTexture, clip, &renderQuad );
-}
-
-SDL_Rect *SpriteSheet::get_state_rect(CellType state)
-{
-	return &m_cell_states[state];
 }

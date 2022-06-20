@@ -7,7 +7,7 @@ Time::Time(int x, int y, Texture *texture) : Numbers{x, y, texture}
 
 void Time::update()
 {
-	m_number = (SDL_GetTicks() - m_start_ticks) / 1000;
+	Numbers::update_number((SDL_GetTicks() - m_start_ticks) / 1000);
 }
 
 void Time::start()

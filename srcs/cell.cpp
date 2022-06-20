@@ -11,7 +11,7 @@ void Cell::init(int x, int y, bool is_bomb)
 	m_state = no_pressed;
 }
 
-void Cell::handle_event(SDL_Event *e, GameState *game_state, int cell, bool bombs[TOTAL_CELLS], Cell cells[TOTAL_CELLS])
+void Cell::handle_event(SDL_Event *e, GameState *game_state, int cell, bool bombs[TOTAL_CELLS], Cell cells[TOTAL_CELLS], int *flags)
 {
 	int x, y;
 	SDL_GetMouseState(&x, &y);
@@ -42,10 +42,15 @@ void Cell::handle_event(SDL_Event *e, GameState *game_state, int cell, bool bomb
 			switch (m_state)
 			{
 			case no_pressed:
-				m_state = flag;
+				if (*flags > 0)
+				{
+					m_state = flag;
+					(*flags)--;
+				}
 				break;
 			case flag:
 				m_state = no_pressed;
+				(*flags)++;
 				break;
 			default:
 				break;

@@ -30,3 +30,8 @@ void Numbers::set_numbers()
         }
     }
 }
+
+void Numbers::update_number(int number)
+{
+	m_number = number;
+}

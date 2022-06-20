@@ -4,6 +4,7 @@ void Cells::init()
 {
     spawn_bombs();
     spawn_cells();
+    m_flags = TOTAL_BOMBS;
 }
 
 void Cells::reset()
@@ -14,10 +15,15 @@ void Cells::reset()
     init();
 }
 
+int Cells::get_flags()
+{
+    return (m_flags);
+}
+
 void Cells::handle_event(SDL_Event *e, GameState *game_state)
 {
     for (int i = 0; i < TOTAL_CELLS; ++i)
-        m_cells[i].handle_event(e, game_state, i, m_bombs, m_cells);
+        m_cells[i].handle_event(e, game_state, i, m_bombs, m_cells, &m_flags);
     if (check_victory())
         *game_state = victory;
 }

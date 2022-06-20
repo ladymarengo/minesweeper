@@ -79,7 +79,7 @@ class Cell
 {
 public:
     void init(int x, int y, bool is_bomb);
-    void handle_event(SDL_Event *e, GameState *game_state, int cell, bool bombs[TOTAL_CELLS], Cell cells[TOTAL_CELLS]);
+    void handle_event(SDL_Event *e, GameState *game_state, int cell, bool bombs[TOTAL_CELLS], Cell cells[TOTAL_CELLS], int *flags);
     void render(CellTexture *texture, SDL_Renderer *renderer);
     int count_neighbours(int cell, bool bombs[TOTAL_CELLS]);
     CellType get_state();
@@ -99,6 +99,7 @@ public:
     void reset();
     void handle_event(SDL_Event *e, GameState *game_state);
     void render(CellTexture *texture, SDL_Renderer *renderer);
+    int get_flags();
 
 private:
     Cell m_cells[TOTAL_CELLS];
@@ -106,6 +107,7 @@ private:
     void spawn_cells();
     void spawn_bombs();
     bool check_victory();
+    int m_flags;
 };
 
 class Numbers
@@ -113,8 +115,9 @@ class Numbers
 public:
     Numbers(int m_x, int m_y, Texture *texture);
     virtual void render(SDL_Renderer* renderer);
+    void update_number(int number);
 
-protected:
+private:
     int m_number;
     Texture *m_texture;
     int m_x;

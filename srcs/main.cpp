@@ -49,6 +49,7 @@ int main(int argc, char *args[])
 {
     CellTexture texture;
     Texture background;
+    Texture numbers;
 
     try
     {
@@ -57,6 +58,7 @@ int main(int argc, char *args[])
 
         texture.load_from_file("./assets/cells.png", gRenderer);
         background.load_from_file("./assets/background.png", gRenderer);
+        numbers.load_from_file("./assets/numbers.png", gRenderer);
     }
     catch (const char *exception)
     {
@@ -67,6 +69,9 @@ int main(int argc, char *args[])
 
     Cells cells{};
     cells.init();
+
+
+    Time timer{TIME_OFFSET_WIDTH, TIME_OFFSET_HEIGTH, &numbers};
 
     GameState game_state{in_game};
     SDL_Event e;
@@ -87,15 +92,21 @@ int main(int argc, char *args[])
             if (game_state != in_game && e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_SPACE)
             {
                 cells.reset();
+                timer.start();
                 game_state = in_game;
             }
         }
+
+        if (game_state == in_game)
+            timer.update();
 
         SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0x00, 0xFF);
         SDL_RenderClear(gRenderer);
         background.render(0, 0, gRenderer, NULL);
 
         cells.render(&texture, gRenderer);
+
+        timer.render(gRenderer);
 
         SDL_RenderPresent(gRenderer);
     }

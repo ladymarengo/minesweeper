@@ -16,6 +16,12 @@
 #define SCREEN_HEIGHT CELL_LINE *CELL_SIZE + OFFSET_WIDTH + OFFSET_HEIGTH
 #define TOTAL_CELLS CELL_LINE *CELL_LINE
 #define TOTAL_BOMBS 40
+#define NUMBER_WIDTH 35
+#define NUMBER_HEIGTH 60
+#define FLAGS_OFFSET_WIDTH 30
+#define FLAGS_OFFSET_HEIGTH 30
+#define TIME_OFFSET_WIDTH 545
+#define TIME_OFFSET_HEIGTH 30
 
 enum GameState
 {
@@ -49,7 +55,7 @@ public:
     ~Texture();
     bool load_from_file(std::string path, SDL_Renderer *renderer);
     void free();
-    void render(int x, int y, SDL_Renderer* renderer, SDL_Rect* clip);
+    virtual void render(int x, int y, SDL_Renderer* renderer, SDL_Rect* clip);
 
 protected:
     SDL_Texture *mTexture;
@@ -100,6 +106,32 @@ private:
     void spawn_cells();
     void spawn_bombs();
     bool check_victory();
+};
+
+class Numbers
+{
+public:
+    Numbers(int m_x, int m_y, Texture *texture);
+    virtual void render(SDL_Renderer* renderer);
+
+protected:
+    int m_number;
+    Texture *m_texture;
+    int m_x;
+    int m_y;
+    void set_numbers();
+    SDL_Rect m_numbers[10];
+};
+
+class Time: public Numbers
+{
+public:
+    Time(int m_x, int m_y, Texture *texture);
+    void update();
+    void start();
+
+private:
+    Uint32 m_start_ticks;
 };
 
 #endif

@@ -103,8 +103,8 @@ int main(int argc, char *args[])
         if (game_state == in_game)
         {
             timer.update();
-            flags.update_number(cells.get_flags());
         }
+        flags.update_number(cells.get_flags());
 
         SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0x00, 0xFF);
         SDL_RenderClear(gRenderer);

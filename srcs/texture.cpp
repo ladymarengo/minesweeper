@@ -45,8 +45,14 @@ void Texture::free()
 	}
 }
 
-void Texture::render( int x, int y, SDL_Rect* clip, SDL_Renderer* renderer)
+void Texture::render( int x, int y, SDL_Renderer* renderer, SDL_Rect* clip)
 {
-	SDL_Rect renderQuad = { x, y, clip->w, clip->h };
+	SDL_Rect renderQuad{x, y, mWidth, mHeight};
+	if (clip)
+	{
+		renderQuad.w = clip->w;
+		renderQuad.h = clip->h;
+	}
+	
 	SDL_RenderCopy( renderer, mTexture, clip, &renderQuad );
 }

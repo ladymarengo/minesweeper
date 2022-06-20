@@ -58,7 +58,7 @@ void Cell::handle_event(SDL_Event *e, GameState *game_state, int cell, bool bomb
 
 void Cell::render(CellTexture *texture, SDL_Renderer *renderer)
 {
-	texture->render(m_position.x, m_position.y, texture->get_state_rect(m_state), renderer);
+	texture->render(m_position.x, m_position.y, renderer, texture->get_state_rect(m_state));
 }
 
 int Cell::count_neighbours(int cell, bool bombs[TOTAL_CELLS])

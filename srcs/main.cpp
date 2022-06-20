@@ -48,6 +48,7 @@ void close()
 int main(int argc, char *args[])
 {
     CellTexture texture;
+    Texture background;
 
     try
     {
@@ -55,6 +56,7 @@ int main(int argc, char *args[])
             throw "Failed to initialize!\n";
 
         texture.load_from_file("./assets/cells.png", gRenderer);
+        background.load_from_file("./assets/background.png", gRenderer);
     }
     catch (const char *exception)
     {
@@ -91,6 +93,7 @@ int main(int argc, char *args[])
 
         SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0x00, 0xFF);
         SDL_RenderClear(gRenderer);
+        background.render(0, 0, gRenderer, NULL);
 
         cells.render(&texture, gRenderer);
 

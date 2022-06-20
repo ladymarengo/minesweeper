@@ -88,11 +88,15 @@ public:
     CellType get_state();
     void open(int cell, bool bombs[TOTAL_CELLS], Cell cells[TOTAL_CELLS]);
 
+    friend class Cells;
+
 private:
     SDL_Point m_position;
     CellType m_state;
     bool m_is_bomb;
     void open_neighbours(int cell, bool bombs[TOTAL_CELLS], Cell cells[TOTAL_CELLS]);
+
+
 };
 
 class Cells
@@ -111,6 +115,7 @@ private:
     void spawn_bombs();
     bool check_victory();
     int m_flags;
+    void highlight_bombs();
 };
 
 class Numbers

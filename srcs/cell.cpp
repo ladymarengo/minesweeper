@@ -5,9 +5,6 @@ void Cell::init(int x, int y, bool is_bomb)
 	m_position.x = x;
 	m_position.y = y;
 	m_is_bomb = is_bomb;
-	// if (m_is_bomb)
-	// 	m_state = bomb_no_pressed;
-	// else
 	m_state = no_pressed;
 }
 

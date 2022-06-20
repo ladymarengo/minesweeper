@@ -26,6 +26,8 @@ void Cells::handle_event(SDL_Event *e, GameState *game_state)
         m_cells[i].handle_event(e, game_state, i, m_bombs, m_cells, &m_flags);
     if (check_victory())
         *game_state = victory;
+    if (*game_state == defeat)
+        highlight_bombs();
 }
 
 void Cells::render(CellTexture *texture, SDL_Renderer *renderer)
@@ -75,28 +77,11 @@ bool Cells::check_victory()
     return (true);
 }
 
-// void    Cells::open_neighbours(int cell)
-// {
-//     if (cell - CELL_LINE >= 0)
-//     {
-//         m_cells[cell - CELL_LINE].open(cell, m_bombs);
-//         if (m_cells[cell - CELL_LINE].get_state() == empty)
-//             open_neighbours(cell - CELL_LINE);
-//     }
-
-// 	// 		+ (cell + CELL_LINE < TOTAL_CELLS && bombs[cell + CELL_LINE]);
-
-// 	// if (cell % CELL_LINE != 0)
-// 	// {
-// 	// 	count += bombs[cell - 1] \
-// 	// 		+ (cell - CELL_LINE - 1 >= 0 && bombs[cell - CELL_LINE - 1]) \
-// 	// 		+ (cell + CELL_LINE - 1 < TOTAL_CELLS && bombs[cell + CELL_LINE - 1]);
-// 	// }
-
-// 	// if (cell % CELL_LINE != CELL_LINE - 1)
-// 	// {
-// 	// 	count += bombs[cell + 1] \
-// 	// 		+ (cell - CELL_LINE + 1 >= 0 && bombs[cell - CELL_LINE + 1]) \
-// 	// 		+ (cell + CELL_LINE + 1 < TOTAL_CELLS && bombs[cell + CELL_LINE + 1]);
-// 	// }
-// }
+void Cells::highlight_bombs()
+{
+    for (int i = 0; i < TOTAL_CELLS; ++i)
+    {
+        if (m_cells[i].m_is_bomb && (m_cells[i].m_state == no_pressed || m_cells[i].m_state == flag))
+            m_cells[i].m_state = bomb_no_pressed;
+    }
+}

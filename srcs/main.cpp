@@ -13,7 +13,7 @@ bool init()
         if (!SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1"))
             throw "Warning: Linear texture filtering not enabled!";
 
-        gWindow = SDL_CreateWindow("SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+        gWindow = SDL_CreateWindow("Minesweeper", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
         if (gWindow == NULL)
             throw "Window could not be created!";
 

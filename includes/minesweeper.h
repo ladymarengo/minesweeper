@@ -22,6 +22,9 @@
 #define FLAGS_OFFSET_HEIGTH 30
 #define TIME_OFFSET_WIDTH 545
 #define TIME_OFFSET_HEIGTH 30
+#define SMILEY_OFFSET_WIDTH 310
+#define SMILEY_OFFSET_HEIGTH 30
+#define SMILEY_SIZE 60
 
 enum GameState
 {
@@ -135,6 +138,17 @@ public:
 
 private:
     Uint32 m_start_ticks;
+};
+
+class Smiley: public Texture
+{
+public:
+    Smiley();
+    virtual void render(SDL_Renderer* renderer, GameState game_state);
+    bool handle_event(SDL_Event *e);
+private:
+    SDL_Rect m_states[3];
+    void set_states();
 };
 
 #endif

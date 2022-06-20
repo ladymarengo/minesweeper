@@ -1,6 +1,6 @@
 NAME = minesweeper
 INCL = -Iincludes/
-FILES = main cell cells cell_texture texture numbers time
+FILES = main cell cells cell_texture texture numbers time smiley
 SRCS = $(patsubst %, srcs/%.cpp, $(FILES))
 
 all:

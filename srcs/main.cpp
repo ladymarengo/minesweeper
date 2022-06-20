@@ -50,6 +50,7 @@ int main(int argc, char *args[])
     CellTexture texture;
     Texture background;
     Texture numbers;
+    Smiley smiley;
 
     try
     {
@@ -59,6 +60,7 @@ int main(int argc, char *args[])
         texture.load_from_file("./assets/cells.png", gRenderer);
         background.load_from_file("./assets/background.png", gRenderer);
         numbers.load_from_file("./assets/numbers.png", gRenderer);
+        smiley.load_from_file("./assets/smiley.png", gRenderer);
     }
     catch (const char *exception)
     {
@@ -90,7 +92,7 @@ int main(int argc, char *args[])
             if (game_state == in_game)
                 cells.handle_event(&e, &game_state);
 
-            if (game_state != in_game && e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_SPACE)
+            if (smiley.handle_event(&e))
             {
                 cells.reset();
                 timer.start();
@@ -112,6 +114,7 @@ int main(int argc, char *args[])
 
         timer.render(gRenderer);
         flags.render(gRenderer);
+        smiley.render(gRenderer, game_state);
 
         SDL_RenderPresent(gRenderer);
     }
